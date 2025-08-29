@@ -56,8 +56,8 @@ repo/
    └─ ... (ONLY files not managed by Home Manager)
 ```
 
-* [ ] Create the above directory structure.
-* [ ] Ensure dotfiles placed under `dotfiles/` do **not** conflict with HM‑managed files.
+* [x] Create the above directory structure.
+* [x] Ensure dotfiles placed under `dotfiles/` do **not** conflict with HM‑managed files.
 
 ---
 
@@ -67,10 +67,10 @@ repo/
 
 **Requirements**
 
-* [ ] Inputs: `nixpkgs = nixos-unstable`, `disko`, `home-manager`.
-* [ ] Outputs: `nixosConfigurations.um790` using `nixosSystem { modules = [ disko module, ./hosts/um790/* ] }`.
-* [ ] Globally enable flakes & nix‑command.
-* [ ] Allow unfree packages if needed (fonts/codecs).
+* [x] Inputs: `nixpkgs = nixos-unstable`, `disko`, `home-manager`.
+* [x] Outputs: `nixosConfigurations.um790` using `nixosSystem { modules = [ disko module, ./hosts/um790/* ] }`.
+* [x] Globally enable flakes & nix‑command.
+* [x] Allow unfree packages if needed (fonts/codecs).
 
 **Acceptance**
 
@@ -85,17 +85,17 @@ repo/
 
 **Layout**
 
-* [ ] Target disk (parameterizable): `/dev/nvme0n1`.
-* [ ] GPT partitions: (1) **ESP** 1 GiB FAT32 → `/boot/efi`; (2) **LUKS** container for the rest.
-* [ ] Inside LUKS: **Btrfs** with subvolumes:
+* [x] Target disk (parameterizable): `/dev/nvme0n1`.
+* [x] GPT partitions: (1) **ESP** 1 GiB FAT32 → `/boot/efi`; (2) **LUKS** container for the rest.
+* [x] Inside LUKS: **Btrfs** with subvolumes:
 
-  * [ ] `@root` → `/` (zstd, noatime)
-  * [ ] `@home` → `/home`
-  * [ ] `@nix`  → `/nix` (noatime)
-  * [ ] `@log`  → `/var/log`
-  * [ ] `@snapshots` → `/.snapshots` (dedicated snapshots subvolume for btrbk; keeps `@root` clean)
-* [ ] **Swap partition** inside LUKS sized ≈ 1–1.5× RAM (hibernate‑ready).
-* [ ] Mount options: `compress=zstd`, `noatime` where noted.
+  * [x] `@root` → `/` (zstd, noatime)
+  * [x] `@home` → `/home`
+  * [x] `@nix`  → `/nix` (noatime)
+  * [x] `@log`  → `/var/log`
+  * [x] `@snapshots` → `/.snapshots` (dedicated snapshots subvolume for btrbk; keeps `@root` clean)
+* [x] **Swap partition** inside LUKS sized ≈ 1–1.5× RAM (hibernate‑ready).
+* [x] Mount options: `compress=zstd`, `noatime` where noted.
 
 **Acceptance**
 
@@ -111,16 +111,16 @@ repo/
 
 **Include**
 
-* [ ] Import `hardware-configuration.nix`, `disko.nix`, and all `modules/*.nix`.
-* [ ] Boot: `systemd-boot` on UEFI.
-* [ ] Kernel: `boot.kernelPackages = linuxPackages_latest` (≥ 6.11).
-* [ ] Kernel params: `amd_pstate=active` (or guided).
-* [ ] Hibernate: set `boot.resumeDevice` to encrypted swap.
-* [ ] Filesystem: mounts per disko; `services.fstrim.enable = true`.
-* [ ] Networking: `networking.networkmanager.enable = true`.
-* [ ] Time/Locale: `time.timeZone = "Europe/Berlin"`; locales `en_US.UTF-8` and `de_DE.UTF-8`.
-* [ ] User: create **dom** (wheel); set default shell; add SSH keys.
-* [ ] Nix: enable experimental features and nix command; GC schedule; `auto-optimise-store = true`.
+* [x] Import `hardware-configuration.nix`, `disko.nix`, and all `modules/*.nix`.
+* [x] Boot: `systemd-boot` on UEFI.
+* [x] Kernel: `boot.kernelPackages = linuxPackages_latest` (≥ 6.11).
+* [x] Kernel params: `amd_pstate=active` (or guided).
+* [x] Hibernate: set `boot.resumeDevice` to encrypted swap.
+* [x] Filesystem: mounts per disko; `services.fstrim.enable = true`.
+* [x] Networking: `networking.networkmanager.enable = true`.
+* [x] Time/Locale: `time.timeZone = "Europe/Berlin"`; locales `en_US.UTF-8` and `de_DE.UTF-8`.
+* [x] User: create **dom** (wheel); set default shell; add SSH keys.
+* [x] Nix: enable experimental features and nix command; GC schedule; `auto-optimise-store = true`.
 
 **Acceptance**
 
@@ -136,12 +136,12 @@ repo/
 
 **Requirements**
 
-* [ ] `networking.firewall.enable = true`.
-* [ ] No inbound TCP/UDP ports opened (`allowedTCPPorts = [ ]; allowedUDPPorts = [ ];`).
-* [ ] Disable ping (`allowPing = false`) unless later needed for diagnostics.
-* [ ] Log refused connections (`logRefusedConnections = true`).
-* [ ] Document (in comments) how to temporarily open a port and container/libvirt interaction.
-* [ ] IPv6 filtered equally (default behavior retained).
+* [x] `networking.firewall.enable = true`.
+* [x] No inbound TCP/UDP ports opened (`allowedTCPPorts = [ ]; allowedUDPPorts = [ ];`).
+* [x] Disable ping (`allowPing = false`) unless later needed for diagnostics.
+* [x] Log refused connections (`logRefusedConnections = true`).
+* [x] Document (in comments) how to temporarily open a port and container/libvirt interaction.
+* [x] IPv6 filtered equally (default behavior retained).
 
 **Acceptance**
 
@@ -156,10 +156,10 @@ repo/
 
 **Purpose:** 780M graphics stack.
 
-* [ ] Enable modern graphics API: `hardware.graphics.enable = true; hardware.graphics.enable32Bit = true;` (24.11+).
-* [ ] Provide Mesa/VA‑API/Vulkan userspace.
-* [ ] (Optional) Steam OFF by default.
-* [ ] Install diagnostics (`glxinfo`, `vulkan-tools`).
+* [x] Enable modern graphics API: `hardware.graphics.enable = true; hardware.graphics.enable32Bit = true;` (24.11+).
+* [x] Provide Mesa/VA‑API/Vulkan userspace.
+* [x] (Optional) Steam OFF by default.
+* [x] Install diagnostics (`glxinfo`, `vulkan-tools`).
 
 **Acceptance**
 
@@ -172,11 +172,11 @@ repo/
 
 **Purpose:** Wayland desktop.
 
-* [ ] `programs.hyprland.enable = true`.
-* [ ] Ensure xdg-desktop-portal-hyprland is active via the module.
-* [ ] Provide/enable a polkit agent.
-* [ ] Install Wayland helpers (wl-clipboard, grim, slurp, swappy) via HM **only**; **do not** manage Hyprland config files here.
-* [ ] Place Hyprland configs under `dotfiles/` and symlink via **Stow**.
+* [x] `programs.hyprland.enable = true`.
+* [x] Ensure xdg-desktop-portal-hyprland is active via the module.
+* [x] Provide/enable a polkit agent.
+* [x] Install Wayland helpers (wl-clipboard, grim, slurp, swappy) via HM **only**; **do not** manage Hyprland config files here.
+* [x] Place Hyprland configs under `dotfiles/` and symlink via **Stow**.
 
 **Acceptance**
 
@@ -189,10 +189,10 @@ repo/
 
 **Purpose:** Idle power + profiles using **power-profiles-daemon**.
 
-* [ ] `services.power-profiles-daemon.enable = true`.
-* [ ] Confirm kernel param `amd_pstate=active` is set (from configuration).
-* [ ] Add a systemd oneshot to set the default profile at boot (e.g., `power-saver` or `balanced`).
-* [ ] Prefer BIOS ASPM/ErP/Resizable BAR enabled when available (document; do not fail if missing).
+* [x] `services.power-profiles-daemon.enable = true`.
+* [x] Confirm kernel param `amd_pstate=active` is set (from configuration).
+* [x] Add a systemd oneshot to set the default profile at boot (e.g., `power-saver` or `balanced`).
+* [x] Prefer BIOS ASPM/ErP/Resizable BAR enabled when available (document; do not fail if missing).
 
 **Acceptance**
 
@@ -258,7 +258,7 @@ repo/
 
 **Purpose:** Firmware updates.
 
-* [ ] `services.fwupd.enable = true`.
+* [x] `services.fwupd.enable = true`.
 
 **Acceptance**
 
@@ -285,8 +285,8 @@ repo/
 
 **Purpose:** Autogenerated by installer; minimal edits only.
 
-* [ ] Ensure filesystems/initrd/µcode match actual hardware.
-* [ ] Keep manual edits minimal and consistent with disko.
+* [x] Ensure filesystems/initrd/µcode match actual hardware.
+* [x] Keep manual edits minimal and consistent with disko.
 
 **Acceptance**
 
@@ -298,14 +298,14 @@ repo/
 
 **Purpose:** User‑level packages/services; avoid overlap with Stow.
 
-* [ ] Enable HM as NixOS module (`programs.home-manager.enable = true`).
-* [ ] CLI packages: git, stow, neovim, ripgrep, fd, htop/btop, jq, yq, glow, tree, wget, curl, unzip.
-* [ ] **SKIP** Dev tools: nodejs, php (optional), python, gcc/clang, pkg-config; nix-ld if needed.
-* [ ] Wayland helpers: wl-clipboard, grim, slurp, swappy, swaybg/swww (configs live in Stow if app supports dotfiles).
-* [ ] Terminal(s): install alacritty (but **configs via Stow** only).
-* [ ] Shell: zsh or fish (set as default); prompt via starship (rc files via Stow).
-* [ ] Fonts: JetBrainsMono Nerd Font, Hasklug Nerd Font Mono, CaskaydiaMono Nerd Font (Omarchy preference). (Nix: add corresponding `nerd-fonts` derivations / `pkgs.nerd-fonts.{jetbrains-mono,hasklug,caskaydia-mono}`).
-* [ ] Notifications/launcher/bar (mako/swaync, wofi/rofi‑wayland, waybar) **optional**; configs via Stow.
+* [x] Enable HM as NixOS module (`programs.home-manager.enable = true`).
+* [x] CLI packages: git, stow, neovim, ripgrep, fd, htop/btop, jq, yq, glow, tree, wget, curl, unzip.
+* [x] **SKIP** Dev tools: nodejs, php (optional), python, gcc/clang, pkg-config; nix-ld if needed.
+* [x] Wayland helpers: wl-clipboard, grim, slurp, swappy, swaybg/swww (configs live in Stow if app supports dotfiles).
+* [x] Terminal(s): install alacritty (but **configs via Stow** only).
+* [x] Shell: zsh or fish (set as default); prompt via starship (rc files via Stow).
+* [x] Fonts: JetBrainsMono Nerd Font, Hasklug Nerd Font Mono, CaskaydiaMono Nerd Font (Omarchy preference). (Nix: add corresponding `nerd-fonts` derivations / `pkgs.nerd-fonts.{jetbrains-mono,hasklug,caskaydia-mono}`).
+* [x] Notifications/launcher/bar (mako/swaync, wofi/rofi‑wayland, waybar) **optional**; configs via Stow.
 
 **Acceptance**
 
@@ -331,15 +331,15 @@ repo/
 
 **Purpose:** Personal configs as symlinks.
 
-* [ ] Place only files not managed by HM.
-* [ ] Initial sets:
+* [x] Place only files not managed by HM.
+* [x] Initial sets:
 
-  * [ ] `hypr/.config/hypr/{hyprland.conf, hypridle.conf, hyprlock.conf}`
-  * [ ] `alacritty/.config/alacritty/alacritty.toml` (or foot/kitty)
-  * [ ] `git/.config/git/config`
-  * [ ] `zsh/.zshrc` (or `fish/config.fish`)
-  * [ ] `wlogout/.config/wlogout/layout` (if used)
-* [ ] Test symlinks: `stow -v -t ~ hypr alacritty git zsh`.
+  * [x] `hypr/.config/hypr/{hyprland.conf, hypridle.conf, hyprlock.conf}`
+  * [x] `alacritty/.config/alacritty/alacritty.toml` (or foot/kitty)
+  * [x] `git/.config/git/config`
+  * [x] `zsh/.zshrc` (or `fish/config.fish`)
+  * [x] `wlogout/.config/wlogout/layout` (if used)
+* [x] Test symlinks: `stow -v -t ~ hypr alacritty git zsh`.
 
 **Acceptance**
 

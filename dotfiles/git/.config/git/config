@@ -1,0 +1,47 @@
+# Git configuration for dom user
+# Personal Git settings - managed via Stow
+
+[user]
+    name = dom
+    email = dom@example.com
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = nvim
+    autocrlf = input
+    pager = less -R
+
+[pull]
+    rebase = false
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[merge]
+    tool = vimdiff
+
+[diff]
+    tool = vimdiff
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    ca = commit -a
+    cm = commit -m
+    cam = commit -am
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = !gitk
+    lg = log --oneline --graph --decorate --all
+    ll = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
+[color]
+    ui = auto
+
+[credential]
+    helper = store
