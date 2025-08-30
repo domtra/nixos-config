@@ -29,6 +29,9 @@
     
     # Enable resume from encrypted swap for hibernation
     resumeDevice = "/dev/mapper/pool-swap";
+
+    # Allow TRIM through LUKS (nice-to-have on NVMe)
+    initrd.luks.devices.cryptroot.allowDiscards = true;
   };
 
   # Filesystem support
@@ -38,6 +41,7 @@
   networking = {
     hostName = "um790";
     networkmanager.enable = true;
+    networkmanager.wifi.powersave = true;
   };
 
   # Locale and timezone
@@ -58,7 +62,7 @@
   # User configuration
   users.users.dom = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "kvm" "video" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       # Add your SSH public keys here
@@ -69,6 +73,8 @@
   security.sudo.wheelNeedsPassword = true;
 
   # Nix configuration
+  hardware.enableRedistributableFirmware = true;
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -95,7 +101,6 @@
   # Enable programs
   programs = {
     zsh.enable = true;
-    home-manager.enable = true;
   };
 
   # This value determines the NixOS release from which the default

@@ -19,7 +19,6 @@
     powerOnBoot = true;
     settings = {
       General = {
-        Enable = "Source,Sink,Media,Socket";
         Experimental = true; # For better device compatibility
       };
     };
@@ -61,7 +60,7 @@
   # Behringer UMC22:
   # - USB Audio Class compliant, no drivers needed
   # - Appears as USB audio device
-  # - USB autosuspend disabled in power.nix for stable operation
+  # - USB autosuspend disabled (kept powered) in power.nix for stable operation
   
   # Elgato Cam Link 4K:
   # - UVC (USB Video Class) compatible

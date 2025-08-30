@@ -7,14 +7,9 @@
     xwayland.enable = true;
   };
 
-  # XDG Desktop Portal for Hyprland
-  services.xserver.desktopManager.plasma5.enable = false;
-  services.displayManager.sddm.enable = false;
-  
-  # Essential for proper portal functionality
+  # XDG Desktop Portal for Hyprland (only Hyprland portal, no wlr)
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
@@ -56,7 +51,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${pkgs.hyprland}/bin/Hyprland";
         user = "greeter";
       };
     };

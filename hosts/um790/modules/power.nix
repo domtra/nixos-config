@@ -29,11 +29,11 @@
 
   # USB autosuspend tweaks (conservative for audio devices)
   services.udev.extraRules = ''
-    # Disable autosuspend for Behringer UMC22 and similar USB audio devices
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1397", ATTR{power/autosuspend}="-1"
-    
-    # Disable autosuspend for Elgato Cam Link 4K
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0fd9", ATTR{idProduct}=="0066", ATTR{power/autosuspend}="-1"
+    # Keep Behringer UMC22 and similar USB audio devices fully powered
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1397", ATTR{power/control}="on"
+
+    # Keep Elgato Cam Link 4K fully powered
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0fd9", ATTR{idProduct}=="0066", ATTR{power/control}="on"
   '';
 
   # Runtime power management for PCIe devices

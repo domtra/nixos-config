@@ -27,14 +27,16 @@ This guide covers the installation and setup of NixOS with Hyprland on the MINIS
 
 ### 2. Network Setup
 
-For WiFi:
+For WiFi with NetworkManager (recommended during install):
+
 ```bash
-# Connect to WiFi
-wpa_supplicant -B -i wlan0 -c <(wpa_passphrase 'SSID' 'password')
-dhcpcd wlan0
+# Use nmtui (TUI) or nmcli (CLI)
+nmtui
+# or:
+nmcli dev wifi connect "SSID" password "PASSWORD"
 ```
 
-For Ethernet: Should work automatically with DHCP.
+Ethernet should work automatically with DHCP.
 
 ### 3. Prepare Installation
 
@@ -152,6 +154,8 @@ glxinfo | grep "OpenGL renderer"
 vulkaninfo | head -20
 # Should show RADV driver information
 ```
+> Note: We keep the Mesa RADV driver as default (no AMDVLK installed).
+> VA-API is provided by `radeonsi`, and OpenCL by Mesa Rusticl (enabled via `RUSTICL_ENABLE=radeonsi`).
 
 ### Audio/Bluetooth Setup
 
@@ -174,6 +178,12 @@ vulkaninfo | head -20
 6. **Cam Link 4K**: Appears as `/dev/video*`
 
 ## Troubleshooting
+
+### Magic Trackpad (USB-C, 2024)
+Recent kernels (in NixOS unstable’s default) include improved support for the USB-C Magic Trackpad.
+If gestures don’t work on older kernels, update first.
+
+---
 
 ### Boot Issues
 
@@ -261,6 +271,9 @@ Enable these settings in BIOS for optimal operation:
 - **Resizable BAR**: Enabled (GPU performance)
 - **Secure Boot**: Can be enabled after installation
 - **TPM**: Enabled for VM experiments
+
+> Firmware updates for SSDs, Thunderbolt, and some peripherals come via **fwupd/LVFS**.
+> Minisforum BIOS updates are typically vendor-supplied (not via LVFS); check Minisforum’s support page.
 
 ## Backup and Recovery
 

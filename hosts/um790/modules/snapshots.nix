@@ -17,20 +17,11 @@
           snapshot_dir = "/.snapshots";
           snapshot_preserve_min = "2d";
           snapshot_preserve = "48h 30d 12m";
-          
-          # Target configurations
-          target_preserve_min = "2d";
-          target_preserve = "48h 30d 12m";
-          
-          # Volume definitions
-          volume."/.snapshots" = {
+          # Volume definitions (snapshot / and /home)
+          volume."/" = {
             subvolume = {
-              "@root" = {
-                snapshot_name = "root";
-              };
-              "@home" = {
-                snapshot_name = "home";
-              };
+              "/" = { snapshot_name = "root"; };
+              "/home" = { snapshot_name = "home"; };
             };
           };
         };

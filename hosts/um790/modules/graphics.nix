@@ -9,15 +9,14 @@
     # Mesa drivers for AMD graphics
     extraPackages = with pkgs; [
       mesa.drivers
-      amdvlk # AMDVLK Vulkan driver
-      rocm-opencl-icd # OpenCL support
-      rocm-opencl-runtime
+      mesa.opencl # OpenCL via Rusticl
+      # rocm-opencl-icd # (optional) Only if a specific app demands ROCm
+      # rocm-opencl-runtime
     ];
     
     # 32-bit Mesa drivers
     extraPackages32 = with pkgs; [
       driversi686Linux.mesa
-      driversi686Linux.amdvlk
     ];
   };
 
@@ -45,11 +44,10 @@
 
   # Environment variables for optimal AMD graphics
   environment.sessionVariables = {
-    # Force AMD GPU for Vulkan
-    AMD_VULKAN_ICD = "RADV";
     # Enable VA-API acceleration
     LIBVA_DRIVER_NAME = "radeonsi";
     # Enable VDPAU acceleration  
     VDPAU_DRIVER = "radeonsi";
+    RUSTICL_ENABLE = "radeonsi";
   };
 }
