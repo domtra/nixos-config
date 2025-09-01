@@ -43,6 +43,9 @@
   # Filesystem support
   services.fstrim.enable = true;
 
+  # Enable GVFS for better file management
+  services.gvfs.enable = true;
+
   # Networking
   networking = {
     hostName = "um790";
@@ -111,7 +114,6 @@
     # keep zsh disabled; remove if no longer needed
     nh = {
       enable = true;
-      flake = "/home/dom/nixos-config";
     };
   };
 

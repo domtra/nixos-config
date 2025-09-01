@@ -78,11 +78,19 @@
     # Audio utils
     pamixer playerctl wiremix
 
-    google-chrome
+    # google-chrome
+    chromium
     _1password-cli
     _1password-gui
 
     bibata-cursors
+
+    # GTK themes and icons
+    adwaita-icon-theme
+    yaru-theme
+    gnome-themes-extra
+
+    nodejs
   ];
 
   # Shell configuration
@@ -134,15 +142,37 @@
     TERMINAL = "alacritty";
     NIXOS_OZONE_WL = "1";
     NH_HOME_FLAKE = "/home/dom/nixos-config#dom@um790";
-
+    NH_OS_FLAKE = "/home/dom/nixos-config#um790";
   };
 
-  home.pointerCursor = {
-    name = "Bibata-Modern-Ice";   # must match the theme’s name
-    package = pkgs.bibata-cursors;
-    size = 28;
-    gtk.enable = true;            # make GTK apps follow it
-    x11.enable = true;            # XWayland apps follow it
+  # home.pointerCursor = {
+  #   name = "Bibata-Modern-Ice";   # must match the theme's name
+  #   package = pkgs.bibata-cursors;
+  #   size = 28;
+  #   gtk.enable = true;            # make GTK apps follow it
+  #   x11.enable = true;            # XWayland apps follow it
+  # };
+
+  # GTK theme configuration
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Yaru-blue";
+      package = pkgs.yaru-theme;
+    };
+  };
+
+  # dconf settings for consistent theming
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      gtk-theme = "Adwaita-dark";
+      icon-theme = "Yaru-blue";
+    };
   };
 
   # Let Home Manager install and manage itself
