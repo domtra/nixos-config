@@ -67,6 +67,11 @@
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = [ pkgs.fcitx5-gtk pkgs.libsForQt5.fcitx5-qt ];
+  };
+
 
   # User configuration
   users.users.dom = {

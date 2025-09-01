@@ -55,6 +55,8 @@
   DESKTOP_SESSION = "Hyprland";
   GDK_BACKEND = "wayland,x11";
   GTK_USE_PORTAL = "1";
+  # 1Password SSH agent
+  SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
   };
 
   # Enable greetd display manager for Wayland login
@@ -75,6 +77,26 @@
       # };
     };
   };
+
+  # 1Password (GUI + SSH agent)
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "dom" ];
+  };
+
+  # Disable SSH agent to avoid conflict with 1Password
+  programs.ssh.startAgent = false;
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+  services.dbus.enable = true;
+
+  # Force gnome-keyring to start WITHOUT SSH component
+  systemd.user.services.gnome-keyring.serviceConfig.ExecStart = lib.mkForce [
+    "" # Clear existing ExecStart
+    "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets,pkcs11"
+  ];
 
   # Note: Wayland helpers (wl-clipboard, grim, slurp, swappy) are installed
   # via Home Manager to avoid duplication.

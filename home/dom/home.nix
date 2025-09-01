@@ -78,10 +78,12 @@
     # Audio utils
     pamixer playerctl wiremix
 
-    # google-chrome
+    # GNOME Keyring tools
+    seahorse libsecret
+
+    # Note: 1Password packages now managed at system level via programs._1password*
+    # Browser (chromium, firefox via system)
     chromium
-    _1password-cli
-    _1password-gui
 
     bibata-cursors
 
