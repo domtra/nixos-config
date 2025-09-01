@@ -20,15 +20,21 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    
+
+    plymouth.enable = true;
+  # Choose a simple theme (alternatives: spinner, bgrt, fade-in, tribar)
+  plymouth.theme = "spinner";
+  # plymouth.theme = "bgrt"; # if firmware logo works nicely
+
     # Use latest kernel (>= 6.11)
     kernelPackages = pkgs.linuxPackages_latest;
     
     # AMD P-State for better power management
-    kernelParams = [ "amd_pstate=active" ];
+    kernelParams = [ "amd_pstate=active" "quiet" "splash" ];
+    # kernelParams = [ "amd_pstate=active" "quiet" "splash" "loglevel=3" "udev.log_priority=3" ];
     
     # Enable resume from encrypted swap for hibernation
-    resumeDevice = "/dev/mapper/pool-swap";
+#    resumeDevice = "/dev/mapper/pool-swap";
 
     # Allow TRIM through LUKS (nice-to-have on NVMe)
     initrd.luks.devices.cryptroot.allowDiscards = true;
@@ -63,7 +69,7 @@
   users.users.dom = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "kvm" "video" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish; # default login shell
     openssh.authorizedKeys.keys = [
       # Add your SSH public keys here
     ];
@@ -100,8 +106,16 @@
 
   # Enable programs
   programs = {
-    zsh.enable = true;
+    fish.enable = true;
+    nix-ld.enable = true;
+    # keep zsh disabled; remove if no longer needed
   };
+
+  # system (one option)
+  fonts.packages = with pkgs; [
+    noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-extra
+    font-awesome
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

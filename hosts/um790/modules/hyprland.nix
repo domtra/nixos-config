@@ -5,6 +5,7 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM = true;
   };
 
   # XDG Desktop Portal for Hyprland (only Hyprland portal, no wlr)
@@ -31,6 +32,12 @@
       TimeoutStopSec = 10;
     };
   };
+  # NOTE: Avoid overriding plymouth-quit ordering here; doing so can deadlock
+  # boot right after LUKS unlock (splash stays forever, no TTY switch). If you
+  # need plymouth tweaks, do it in a dedicated module and test carefully.
+  # If you simply want a cleaner auto-login experience, rely on greetd below.
+
+  security.pam.services.hyprlock = {};
 
   # Session variables for Wayland
   environment.sessionVariables = {
@@ -44,16 +51,28 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
+  # Ensure tools see proper session with uwsm
+  DESKTOP_SESSION = "Hyprland";
+  GDK_BACKEND = "wayland,x11";
+  GTK_USE_PORTAL = "1";
   };
 
   # Enable greetd display manager for Wayland login
   services.greetd = {
     enable = true;
+    
     settings = {
+      # Auto-login user 'dom' into Hyprland via UWSM every boot.
+      # Use lowercase hyprland desktop entry; pass with -- to disambiguate.
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${pkgs.hyprland}/bin/Hyprland";
-        user = "greeter";
+        command = "${pkgs.uwsm}/bin/uwsm start -- hyprland-uwsm.desktop";
+        user = "dom";
       };
+      # For a tui greeter instead, replace above with:
+      # default_session = {
+      #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd 'uwsm start -- hyprland-uwsm.desktop'";
+      #   user = "greeter";
+      # };
     };
   };
 
