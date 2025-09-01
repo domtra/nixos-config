@@ -109,6 +109,10 @@
     fish.enable = true;
     nix-ld.enable = true;
     # keep zsh disabled; remove if no longer needed
+    nh = {
+      enable = true;
+      flake = "/home/dom/nixos-config";
+    };
   };
 
   # system (one option)

@@ -15,9 +15,27 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, home-manager, ... }: {
+  outputs = { self, nixpkgs, disko, home-manager, ... }:
+  let
+    system = "x86_64-linux";
+    
+    # Single nixpkgs instance with shared config
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    
+    # Single home modules definition  
+    homeModules = [ ./home/dom/home.nix ];
+    
+    # Single home configuration that both paths use
+    homeConfiguration = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = homeModules;
+    };
+  in {
     nixosConfigurations.um790 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       modules = [
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
@@ -28,17 +46,22 @@
           # Global flakes and nix-command
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
           
-          # Allow unfree packages
-          nixpkgs.config.allowUnfree = true;
+          # Use the SAME pkgs instance (inherits allowUnfree automatically)
+          nixpkgs.pkgs = pkgs;
           
           # Home Manager configuration
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.dom = import ./home/dom/home.nix;
+            # Import the SAME modules
+            users.dom = { imports = homeModules; };
           };
         }
       ];
     };
+    
+    # Reuse the exact same configuration
+    homeManagerConfigurations."dom@um790" = homeConfiguration;
+    "dom@um790" = homeConfiguration.activationPackage;
   };
 }

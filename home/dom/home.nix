@@ -68,6 +68,8 @@
     # Desktop apps
     # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
     # nautilus sushi signal-desktop spotify
+    evince imv mpv libreoffice pinta obsidian localsend
+    nautilus sushi impala
 
     # CLI & dev
     zoxide fzf bat eza tldr dust fastfetch whois xmlstarlet plocate gum
@@ -131,6 +133,8 @@
     BROWSER = "firefox";
     TERMINAL = "alacritty";
     NIXOS_OZONE_WL = "1";
+    NH_HOME_FLAKE = "/home/dom/nixos-config#dom@um790";
+
   };
 
   home.pointerCursor = {
