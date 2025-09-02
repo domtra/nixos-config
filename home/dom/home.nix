@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
+  # Import Walker's home-manager module
+  imports = [
+    inputs.walker.homeManagerModules.default
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should manage
   home.username = "dom";
   home.homeDirectory = "/home/dom";
@@ -63,7 +68,7 @@
 
     # Hyprland helpers
     hypridle hyprlock hyprpicker hyprshot hyprsunset hyprland-qtutils
-    swayosd wl-clip-persist wl-screenrec wf-recorder walker
+    swayosd wl-clip-persist wl-screenrec wf-recorder
 
     # Desktop apps
     # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
@@ -136,6 +141,33 @@
       package = pkgs.vscode.fhs;
     };
   };
+
+  # Walker configuration (replaces nixpkgs walker with 1.0.0 beta + Elephant)
+  programs.walker = {
+    enable = true;
+    # runAsService = true;
+    # config = {
+    #   search.placeholder = "Search...";
+    #   ui.fullscreen = true;
+    #   list.height = 200;
+    #   websearch.prefix = "?";
+    #   switcher.prefix = "/";
+    # };
+  };
+
+  # programs.elephant = {
+  #   enable = true;
+  #   installService = true;
+  #   providers = [
+  #     "desktopapplications"  # Essential for app launching
+  #     "files"                # File search
+  #     "clipboard"            # Clipboard history
+  #     "runner"               # Command runner
+  #     "calc"                 # Calculator
+  #     "websearch"            # Web search
+  #     "symbols"              # Symbols/emojis
+  #   ];
+  # };
 
   # Session variables
   home.sessionVariables = {

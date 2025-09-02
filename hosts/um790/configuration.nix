@@ -46,6 +46,19 @@
   # Enable GVFS for better file management
   services.gvfs.enable = true;
 
+  # Enable thunderbolt support
+  # services.hardware.bolt.enable = true;
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+    openFirewall = true;
+  };
+
+
   # Networking
   networking = {
     hostName = "um790";
@@ -80,6 +93,7 @@
     shell = pkgs.fish; # default login shell
     openssh.authorizedKeys.keys = [
       # Add your SSH public keys here
+    	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOmJYyS8GjE/Fx2eHPGX6SiezubYiY2xVZU3zAXeENRY dominik@bleech.de"
     ];
   };
 
@@ -93,6 +107,16 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
+      
+      # Binary caches
+      substituters = [
+        "https://cache.nixos.org/"
+        "https://walker-git.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
+      ];
     };
     
     # Weekly garbage collection

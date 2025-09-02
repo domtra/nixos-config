@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +20,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, home-manager, ... }:
+  outputs = { self, nixpkgs, disko, home-manager, walker, ... }@inputs:
   let
     system = "x86_64-linux";
     
@@ -32,6 +37,7 @@
     homeConfiguration = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = homeModules;
+      extraSpecialArgs = { inherit inputs; };
     };
   in {
     nixosConfigurations.um790 = nixpkgs.lib.nixosSystem {
@@ -53,8 +59,9 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            # Import the SAME modules
+            # Import the SAME modules with inputs
             users.dom = { imports = homeModules; };
+            extraSpecialArgs = { inherit inputs; };
           };
         }
       ];
