@@ -101,6 +101,10 @@
 
     satty
     terminaltexteffects
+
+    vial via
+
+    ghostty
   ];
 
   # Shell configuration
@@ -131,11 +135,20 @@
     # Git configuration (basic - detailed config via Stow)
     git = {
       enable = true;
-      userName = "Dominik Traenklein";
-      userEmail = "dominik@bleech.de"; # Replace with actual email
+      userName = "Dominik Tränklein";
+      userEmail = "dominik@bleech.de";
+      aliases = {
+        co = "checkout";
+        l = "log --graph --date=short";
+        gi = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
+        s = "status";
+      };
       extraConfig = {
         init.defaultBranch = "main";
         pull.rebase = false;
+        color.ui = true;
+        format.pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
+        rerere.enabled = true;
       };
     };
 

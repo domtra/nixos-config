@@ -19,6 +19,7 @@
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      systemd-boot.consoleMode = "max";
     };
 
     plymouth.enable = true;
@@ -28,9 +29,12 @@
 
     # Use latest kernel (>= 6.11)
     kernelPackages = pkgs.linuxPackages_latest;
-    
+    consoleLogLevel = 3;
     # AMD P-State for better power management
-    kernelParams = [ "amd_pstate=active" "quiet" "splash" ];
+    kernelParams = [ "amd_pstate=active" "quiet" "splash"
+      "udev.log_priority=3" "rd.systemd.show_status=auto"
+      "vt.global_cursor_default=0"
+      "plymouth.use-simpledrm" ];
     # kernelParams = [ "amd_pstate=active" "quiet" "splash" "loglevel=3" "udev.log_priority=3" ];
     
     # Enable resume from encrypted swap for hibernation
@@ -64,7 +68,17 @@
     hostName = "um790";
     networkmanager.enable = true;
     networkmanager.wifi.powersave = true;
+    networkmanager.wifi.backend = "iwd";
+    wireless.iwd.enable = true;
+    # usePredictableInterfaceNames = true;
   };
+  # disable the upstream 80-iwd.link that pins kernel names
+  systemd.network.links."80-iwd" = lib.mkForce {};
+
+  # services.udev.extraRules = ''
+  #   # Allow WebHID (VIA) to access NuPhy keyboards over hidraw
+  #   KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", MODE="0660", GROUP="input", TAG+="uaccess", TAG+="udev-acl"
+  # '';
 
   # Locale and timezone
   time.timeZone = "Europe/Berlin";
@@ -89,7 +103,7 @@
   # User configuration
   users.users.dom = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" "kvm" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "kvm" "video" "input" ];
     shell = pkgs.fish; # default login shell
     openssh.authorizedKeys.keys = [
       # Add your SSH public keys here
@@ -134,6 +148,8 @@
     curl
     git
     htop
+    usbutils
+    kdePackages.kio-fuse
   ];
 
   # Enable programs
@@ -151,6 +167,10 @@
     noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-extra
     font-awesome
   ];
+
+  programs.kdeconnect.enable = true;
+  programs.localsend.enable = true;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
