@@ -4,10 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # walker = {
+    #   url = "github:abenz1267/walker";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     
     disko = {
       url = "github:nix-community/disko";
@@ -20,7 +20,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, home-manager, walker, ... }@inputs:
+  outputs = { self, nixpkgs, disko, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     

@@ -49,14 +49,14 @@
   # Enable thunderbolt support
   # services.hardware.bolt.enable = true;
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
-    };
-    openFirewall = true;
-  };
+  # services.openssh = {
+  #   enable = true;
+  #   settings = {
+  #     PasswordAuthentication = false;
+  #     PermitRootLogin = "no";
+  #   };
+  #   openFirewall = true;
+  # };
 
 
   # Networking
