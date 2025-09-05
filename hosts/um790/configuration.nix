@@ -23,9 +23,8 @@
     };
 
     plymouth.enable = true;
-  # Choose a simple theme (alternatives: spinner, bgrt, fade-in, tribar)
-  plymouth.theme = "spinner";
-  # plymouth.theme = "bgrt"; # if firmware logo works nicely
+  # Choose a theme (built-ins: spinner, bgrt, fade-in, tribar, details, text)
+  plymouth.theme = "bgrt"; # shows firmware logo if available; falls back gracefully
 
     # Use latest kernel (>= 6.11)
     kernelPackages = pkgs.linuxPackages_latest;
@@ -37,6 +36,9 @@
       "plymouth.use-simpledrm" ];
     # kernelParams = [ "amd_pstate=active" "quiet" "splash" "loglevel=3" "udev.log_priority=3" ];
     
+    # Enable initrd with systemd so Plymouth renders the LUKS prompt
+    initrd.systemd.enable = true;
+
     # Enable resume from encrypted swap for hibernation
 #    resumeDevice = "/dev/mapper/pool-swap";
 
