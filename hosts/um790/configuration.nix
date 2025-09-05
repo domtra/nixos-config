@@ -173,7 +173,9 @@
   programs.kdeconnect.enable = true;
   programs.localsend.enable = true;
 
-
+  # Location services for apps like darkman (Home Manager)
+  # Required when `services.darkman.settings.usegeoclue = true;` is set.
+  services.geoclue2.enable = true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

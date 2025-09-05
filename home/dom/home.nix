@@ -227,6 +227,26 @@
     };
   };
 
+  services.darkman = {
+    enable = true;
+    # Either let geoclue detect your location…
+    settings.usegeoclue = true;
+    # …or set it explicitly (Berlin):
+    # settings = { lat = 52.52; lng = 13.405; };
+
+    # Hooks when switching:
+    darkModeScripts = {
+      "default" = ''
+        omx-theme-set catppuccin
+      '';
+    };
+    lightModeScripts = {
+      "default" = ''
+        omx-theme-set catppuccin-latte
+      '';
+    };
+  };
+
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
