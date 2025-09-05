@@ -195,13 +195,15 @@
     NH_OS_FLAKE = "/home/dom/nixos-config#um790";
   };
 
-  # home.pointerCursor = {
-  #   name = "Bibata-Modern-Ice";   # must match the theme's name
-  #   package = pkgs.bibata-cursors;
-  #   size = 28;
-  #   gtk.enable = true;            # make GTK apps follow it
-  #   x11.enable = true;            # XWayland apps follow it
-  # };
+  home.pointerCursor = {
+    # name = "Bibata-Modern-Ice";   # must match the theme's name
+    # package = pkgs.bibata-cursors;
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 24;
+    gtk.enable = true;            # make GTK apps follow it
+    x11.enable = true;            # XWayland apps follow it
+  };
 
   # GTK theme configuration
   gtk = {
