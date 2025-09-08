@@ -24,7 +24,18 @@
 
     plymouth.enable = true;
   # Choose a theme (built-ins: spinner, bgrt, fade-in, tribar, details, text)
-  plymouth.theme = "bgrt"; # shows firmware logo if available; falls back gracefully
+  # plymouth.theme = "bgrt"; # shows firmware logo if available; falls back gracefully
+  
+    plymouth.themePackages = [ pkgs.catppuccin-plymouth ];
+    plymouth.theme = "catppuccin-macchiato";
+    # Disable vendor logo overlay by pointing to a 1x1 transparent PNG
+    # (Plymouth expects an absolute path; using a derivation ensures a valid
+    # store path while effectively hiding the logo.)
+    plymouth.logo = pkgs.runCommand "transparent-plymouth-logo.png" {
+      nativeBuildInputs = [ pkgs.imagemagick ];
+    } ''
+      convert -size 1x1 xc:none png:$out
+    '';
 
     # Use latest kernel (>= 6.11)
     kernelPackages = pkgs.linuxPackages_latest;
