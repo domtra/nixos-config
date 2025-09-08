@@ -105,6 +105,11 @@
     vial via
 
     ghostty
+
+    anytype
+    obsidian
+
+    home-assistant-cli
   ];
 
   # Shell configuration
