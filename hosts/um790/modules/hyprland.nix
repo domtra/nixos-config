@@ -17,6 +17,11 @@
     ];
   };
 
+  environment.variables = {
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
+  };
+
   # Polkit authentication agent
   security.polkit.enable = true;
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
