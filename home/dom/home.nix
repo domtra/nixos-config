@@ -119,6 +119,8 @@
     home-assistant-cli
 
     killall
+    kdePackages.qt6ct
+    lmstudio
   ];
 
   # Shell configuration
