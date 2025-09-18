@@ -60,9 +60,9 @@
     nerd-fonts.caskaydia-mono
 
     # Optional notification/launcher/bar tools (configs via Stow)
-    # mako          # Notifications
-    # wofi          # Launcher
-    # waybar        # Status bar
+    mako          # Notifications
+    wofi          # Launcher
+    waybar        # Status bar
     # swayosd
     # walker
 
@@ -98,13 +98,6 @@
     gnome-themes-extra
 
     nodejs
-
-    # Build essentials for Neovim/LazyVim (treesitter, native plugins)
-    gcc
-    gnumake
-    pkg-config
-    python3
-    python3Packages.pynvim
 
     satty
     terminaltexteffects
@@ -171,53 +164,6 @@
     vscode = {
       enable = true;
       package = pkgs.vscode.fhs;
-    };
-
-    hyprpanel = {
-      enable = true;
-      settings = {
-        bar.layouts = {
-          "0" = {
-            "left" = ["dashboard" "workspaces" "windowtitle"];
-            "middle" = ["clock"];
-            "right" = [
-              "systray"
-              "volume"
-              "network"
-              "bluetooth"
-              "cputemp"
-              "notifications"
-            ];
-          };
-        };
-        theme.font.name = "Hasklug Nerd Font";
-        theme.font.style = "normal";
-        theme.font.label = "Hasklug Nerd Font Medium";
-        theme.font.size = "1rem";
-        menus.clock.time.military = true;
-        menus.clock.time.hideSeconds = false;
-        menus.clock.weather.unit = "metric";
-        menus.dashboard.shortcuts.enabled = false;
-        menus.dashboard.directories.enabled = false;
-        theme.bar.floating = false;
-        theme.bar.buttons.enableBorders = false;
-        bar.launcher.autoDetectIcon = false;
-        theme.bar.buttons.dashboard.enableBorder = false;
-        bar.launcher.icon = " ";
-        bar.workspaces.show_icons = false;
-        bar.workspaces.show_numbered = true;
-        bar.windowtitle.custom_title = true;
-        bar.battery.label = true;
-        bar.clock.showTime = true;
-        bar.clock.showIcon = true;
-        bar.clock.format = "KW%V %a %b %d  %H:%M";
-        theme.font.weight = 500;
-        theme.bar.menus.opacity = 100;
-        theme.bar.transparent = true;
-        theme.bar.buttons.monochrome = true;
-        bar.bluetooth.label = false;
-        bar.network.label = false;
-      };
     };
   };
 
