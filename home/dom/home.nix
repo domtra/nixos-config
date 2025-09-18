@@ -87,8 +87,8 @@
     seahorse libsecret
 
     # Note: 1Password packages now managed at system level via programs._1password*
-    # Browser (chromium, firefox via system)
-    chromium
+    # Browser (chromium with Widevine for Apple Music, firefox via system)
+    (chromium.override { enableWideVine = true; })
 
     bibata-cursors
 
