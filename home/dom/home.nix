@@ -1,4 +1,7 @@
-{ config, pkgs, inputs, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   # Import Walker's home-manager module
@@ -27,6 +30,9 @@
     gcc
     tree-sitter
     nixfmt
+    nixd
+    statix
+    deadnix
 
     # Search and file management
     ripgrep
@@ -63,31 +69,65 @@
     nerd-fonts.caskaydia-mono
 
     # Optional notification/launcher/bar tools (configs via Stow)
-    mako          # Notifications
-    wofi          # Launcher
-    waybar        # Status bar
+    mako # Notifications
+    wofi # Launcher
+    waybar # Status bar
     # swayosd
     # walker
 
     # Hyprland helpers
-    hypridle hyprlock hyprpicker hyprshot hyprsunset hyprland-qtutils
-    swayosd wl-clip-persist wl-screenrec wf-recorder walker
+    hypridle
+    hyprlock
+    hyprpicker
+    hyprshot
+    hyprsunset
+    hyprland-qtutils
+    swayosd
+    wl-clip-persist
+    wl-screenrec
+    wf-recorder
+    walker
 
     # Desktop apps
     # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
     # nautilus sushi signal-desktop spotify
-    evince imv mpv libreoffice pinta obsidian localsend
-    nautilus sushi impala
+    evince
+    imv
+    mpv
+    libreoffice
+    pinta
+    obsidian
+    localsend
+    nautilus
+    sushi
+    impala
 
     # CLI & dev
-    zoxide fzf bat eza tldr dust fastfetch whois xmlstarlet plocate gum
-    imagemagick ffmpegthumbnailer gh lazygit lazydocker
+    zoxide
+    fzf
+    bat
+    eza
+    tldr
+    dust
+    fastfetch
+    whois
+    xmlstarlet
+    plocate
+    gum
+    imagemagick
+    ffmpegthumbnailer
+    gh
+    lazygit
+    lazydocker
 
     # Audio utils
-    pamixer playerctl wiremix
+    pamixer
+    playerctl
+    wiremix
 
     # GNOME Keyring tools
-    seahorse libsecret
+    seahorse
+    libsecret
 
     # Note: 1Password packages now managed at system level via programs._1password*
     # Browser (chromium with Widevine for Apple Music, firefox via system)
@@ -105,7 +145,8 @@
     satty
     terminaltexteffects
 
-    vial via
+    vial
+    via
 
     ghostty
 
@@ -213,8 +254,8 @@
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
     size = 24;
-    gtk.enable = true;            # make GTK apps follow it
-    x11.enable = true;            # XWayland apps follow it
+    gtk.enable = true; # make GTK apps follow it
+    x11.enable = true; # XWayland apps follow it
   };
 
   # GTK theme configuration
