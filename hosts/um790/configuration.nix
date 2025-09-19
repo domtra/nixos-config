@@ -163,6 +163,8 @@
     htop
     usbutils
     kdePackages.kio-fuse
+    imagemagick
+    ghostscript
   ];
 
   # Enable programs

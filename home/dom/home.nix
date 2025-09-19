@@ -24,6 +24,9 @@
 
     # Text editing
     neovim
+    gcc
+    tree-sitter
+    nixfmt
 
     # Search and file management
     ripgrep
