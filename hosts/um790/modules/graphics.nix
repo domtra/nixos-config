@@ -8,7 +8,7 @@
     
     # Mesa drivers for AMD graphics
     extraPackages = with pkgs; [
-      mesa.drivers
+      mesa
       mesa.opencl # OpenCL via Rusticl
       # rocm-opencl-icd # (optional) Only if a specific app demands ROCm
       # rocm-opencl-runtime

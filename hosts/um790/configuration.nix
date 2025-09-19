@@ -108,7 +108,8 @@
     LC_TIME = "de_DE.UTF-8";
   };
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5.addons = [ pkgs.fcitx5-gtk pkgs.libsForQt5.fcitx5-qt ];
   };
 
