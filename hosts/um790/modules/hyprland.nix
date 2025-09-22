@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Enable Hyprland wayland compositor
@@ -37,32 +41,35 @@
   # need plymouth tweaks, do it in a dedicated module and test carefully.
   # If you simply want a cleaner auto-login experience, rely on greetd below.
 
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
 
   # Session variables for Wayland
   environment.sessionVariables = {
     # Hint electron apps to use Wayland
     NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    OZONE_PLATFORM = "wayland";
+    MOZ_ENABLE_WAYLAND = "1";
     # Qt Wayland support
     QT_QPA_PLATFORM = "wayland;xcb";
+    QT_STYLE_OVERRIDE = "kvantum";
     # SDL Wayland support
     SDL_VIDEODRIVER = "wayland";
     # XDG desktop portal
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
-  # Ensure tools see proper session with uwsm
-  DESKTOP_SESSION = "Hyprland";
-  GDK_BACKEND = "wayland,x11";
-  GTK_USE_PORTAL = "1";
-  # 1Password SSH agent
-  SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
+    # Ensure tools see proper session with uwsm
+    DESKTOP_SESSION = "Hyprland";
+    GDK_BACKEND = "wayland,x11";
+    # 1Password SSH agent
+    SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
   };
 
   # Enable greetd display manager for Wayland login
   services.greetd = {
     enable = true;
-    
+
     settings = {
       # Auto-login user 'dom' into Hyprland via UWSM every boot.
       # Use lowercase hyprland desktop entry; pass with -- to disambiguate.

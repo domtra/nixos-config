@@ -26,7 +26,7 @@
     stow
 
     # Text editing
-    neovim
+    #neovim
     gcc
     tree-sitter
     nixfmt
@@ -74,19 +74,6 @@
     waybar # Status bar
     # swayosd
     # walker
-
-    # Hyprland helpers
-    hypridle
-    hyprlock
-    hyprpicker
-    hyprshot
-    hyprsunset
-    hyprland-qtutils
-    swayosd
-    wl-clip-persist
-    wl-screenrec
-    wf-recorder
-    walker
 
     # Desktop apps
     # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
@@ -138,7 +125,6 @@
     # GTK themes and icons
     adwaita-icon-theme
     yaru-theme
-    gnome-themes-extra
 
     nodejs
 
@@ -156,7 +142,6 @@
     home-assistant-cli
 
     killall
-    kdePackages.qt6ct
     lmstudio
   ];
 
@@ -209,6 +194,13 @@
       enable = true;
       package = pkgs.vscode.fhs;
     };
+
+    neovim = {
+      enable = true;
+      extraPackages = [ pkgs.sqlite ];
+
+      plugins = [ pkgs.vimPlugins.sqlite-lua ];
+    };
   };
 
   # # Walker configuration (replaces nixpkgs walker with 1.0.0 beta + Elephant)
@@ -246,6 +238,7 @@
     NIXOS_OZONE_WL = "1";
     NH_HOME_FLAKE = "/home/dom/nixos-config#dom@um790";
     NH_OS_FLAKE = "/home/dom/nixos-config#um790";
+    SQLITE_CLIB_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
   };
 
   home.pointerCursor = {

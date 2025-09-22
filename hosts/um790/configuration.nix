@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -23,35 +28,43 @@
     };
 
     plymouth.enable = true;
-  # Choose a theme (built-ins: spinner, bgrt, fade-in, tribar, details, text)
-  # plymouth.theme = "bgrt"; # shows firmware logo if available; falls back gracefully
-  
+    # Choose a theme (built-ins: spinner, bgrt, fade-in, tribar, details, text)
+    # plymouth.theme = "bgrt"; # shows firmware logo if available; falls back gracefully
+
     plymouth.themePackages = [ pkgs.catppuccin-plymouth ];
     plymouth.theme = "catppuccin-macchiato";
     # Disable vendor logo overlay by pointing to a 1x1 transparent PNG
     # (Plymouth expects an absolute path; using a derivation ensures a valid
     # store path while effectively hiding the logo.)
-    plymouth.logo = pkgs.runCommand "transparent-plymouth-logo.png" {
-      nativeBuildInputs = [ pkgs.imagemagick ];
-    } ''
-      convert -size 1x1 xc:none png:$out
-    '';
+    plymouth.logo =
+      pkgs.runCommand "transparent-plymouth-logo.png"
+        {
+          nativeBuildInputs = [ pkgs.imagemagick ];
+        }
+        ''
+          convert -size 1x1 xc:none png:$out
+        '';
 
     # Use latest kernel (>= 6.11)
     kernelPackages = pkgs.linuxPackages_latest;
     consoleLogLevel = 3;
     # AMD P-State for better power management
-    kernelParams = [ "amd_pstate=active" "quiet" "splash"
-      "udev.log_priority=3" "rd.systemd.show_status=auto"
+    kernelParams = [
+      "amd_pstate=active"
+      "quiet"
+      "splash"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
       "vt.global_cursor_default=0"
-      "plymouth.use-simpledrm" ];
+      "plymouth.use-simpledrm"
+    ];
     # kernelParams = [ "amd_pstate=active" "quiet" "splash" "loglevel=3" "udev.log_priority=3" ];
-    
+
     # Enable initrd with systemd so Plymouth renders the LUKS prompt
     initrd.systemd.enable = true;
 
     # Enable resume from encrypted swap for hibernation
-#    resumeDevice = "/dev/mapper/pool-swap";
+    #    resumeDevice = "/dev/mapper/pool-swap";
 
     # Allow TRIM through LUKS (nice-to-have on NVMe)
     initrd.luks.devices.cryptroot.allowDiscards = true;
@@ -75,7 +88,6 @@
   #   openFirewall = true;
   # };
 
-
   # Networking
   networking = {
     hostName = "um790";
@@ -86,7 +98,7 @@
     # usePredictableInterfaceNames = true;
   };
   # disable the upstream 80-iwd.link that pins kernel names
-  systemd.network.links."80-iwd" = lib.mkForce {};
+  systemd.network.links."80-iwd" = lib.mkForce { };
 
   # services.udev.extraRules = ''
   #   # Allow WebHID (VIA) to access NuPhy keyboards over hidraw
@@ -110,18 +122,28 @@
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = [ pkgs.fcitx5-gtk pkgs.kdePackages.fcitx5-qt pkgs.libsForQt5.fcitx5-qt ];
+    fcitx5.addons = [
+      pkgs.fcitx5-gtk
+      pkgs.kdePackages.fcitx5-qt
+      pkgs.libsForQt5.fcitx5-qt
+    ];
   };
-
 
   # User configuration
   users.users.dom = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" "kvm" "video" "input" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "libvirtd"
+      "kvm"
+      "video"
+      "input"
+    ];
     shell = pkgs.fish; # default login shell
     openssh.authorizedKeys.keys = [
       # Add your SSH public keys here
-    	"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOmJYyS8GjE/Fx2eHPGX6SiezubYiY2xVZU3zAXeENRY dominik@bleech.de"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOmJYyS8GjE/Fx2eHPGX6SiezubYiY2xVZU3zAXeENRY dominik@bleech.de"
     ];
   };
 
@@ -133,9 +155,12 @@
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
-      
+
       # Binary caches
       substituters = [
         "https://cache.nixos.org/"
@@ -146,7 +171,7 @@
         "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
       ];
     };
-    
+
     # Weekly garbage collection
     gc = {
       automatic = true;
@@ -166,6 +191,34 @@
     kdePackages.kio-fuse
     imagemagick
     ghostscript
+    # hyprland
+    cups
+    cups-browsed
+    cups-filters
+    cups-pdf-to-pdf
+    gnome-calculator
+    gnome-calendar
+    gnome-themes-extra
+    gum
+    libsForQt5.qtstyleplugin-kvantum
+    kdePackages.qtstyleplugin-kvantum
+    libsForQt5.qt5.qtwayland
+    kdePackages.qtwayland
+
+    # Hyprland helpers
+    hypridle
+    hyprlock
+    hyprpicker
+    hyprshot
+    hyprsunset
+    hyprland-qtutils
+    swayosd
+    wl-clip-persist
+    wl-screenrec
+    wf-recorder
+    walker
+
+    sqlite
   ];
 
   # Enable programs
@@ -180,7 +233,10 @@
 
   # system (one option)
   fonts.packages = with pkgs; [
-    noto-fonts noto-fonts-emoji noto-fonts-cjk-sans noto-fonts-extra
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk-sans
+    noto-fonts-extra
     font-awesome
   ];
 
