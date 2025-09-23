@@ -20,6 +20,8 @@
     ../um790/modules/snapshots.nix
     # Apple‑silicon graphics settings
     ./modules/graphics.nix
+    # Shared system packages (same as UM790)
+    ../../modules/common/system-packages.nix
   ];
 
   # Boot on Apple Silicon via Asahi's UEFI environment
@@ -124,10 +126,7 @@
     gc.options = "--delete-older-than 30d";
   };
 
-  # Essentials; keep system-level minimal
-  environment.systemPackages = with pkgs; [
-    vim wget curl git htop usbutils imagemagick
-  ];
+  # System packages are imported from the common module above
 
   # Important for stable state evolution
   system.stateVersion = "24.11";
