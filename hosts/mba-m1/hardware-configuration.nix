@@ -28,7 +28,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/BTRFS-UUID-REPLACE"; # <-- set me
     fsType = "btrfs";
-    options = [ "subvol=@root" "compress=zstd" "noatime" ];
+    options = [ "subvol=@" "compress=zstd" "noatime" ];
   };
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/BTRFS-UUID-REPLACE"; # <-- set me
@@ -65,4 +65,3 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
-

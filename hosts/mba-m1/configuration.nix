@@ -23,6 +23,8 @@
 
     # Render unlock prompts nicely in initrd
     initrd.systemd.enable = true;
+    # If root mount fails, allow an emergency shell without a password
+    initrd.systemd.emergencyAccess = true;
 
     # Allow TRIM through LUKS (safe on NVMe and helps longevity)
     initrd.luks.devices.cryptroot.allowDiscards = true;
@@ -116,4 +118,3 @@
   # Important for stable state evolution
   system.stateVersion = "24.11";
 }
-
