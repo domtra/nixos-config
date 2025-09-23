@@ -17,6 +17,7 @@
     ./modules/virtualization.nix
     ./modules/firmware.nix
     ./modules/snapshots.nix
+    ../../modules/common/system-packages.nix
   ];
 
   # Boot configuration
@@ -180,46 +181,7 @@
     };
   };
 
-  # Essential system packages
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-    git
-    htop
-    usbutils
-    kdePackages.kio-fuse
-    imagemagick
-    ghostscript
-    # hyprland
-    cups
-    cups-browsed
-    cups-filters
-    cups-pdf-to-pdf
-    gnome-calculator
-    gnome-calendar
-    gnome-themes-extra
-    gum
-    libsForQt5.qtstyleplugin-kvantum
-    kdePackages.qtstyleplugin-kvantum
-    libsForQt5.qt5.qtwayland
-    kdePackages.qtwayland
-
-    # Hyprland helpers
-    hypridle
-    hyprlock
-    hyprpicker
-    hyprshot
-    hyprsunset
-    hyprland-qtutils
-    swayosd
-    wl-clip-persist
-    wl-screenrec
-    wf-recorder
-    walker
-
-    sqlite
-  ];
+  # System packages shared via common module (see ../../modules/common/system-packages.nix)
 
   # Enable programs
   programs = {
