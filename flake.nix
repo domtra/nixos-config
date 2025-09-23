@@ -91,7 +91,11 @@
       modules = [
         home-manager.nixosModules.home-manager
         # Asahi / Apple Silicon support
-        nixos-apple-silicon.nixosModules.apple-silicon
+        nixos-apple-silicon.nixosModules.apple-silicon-support
+        # Overlay provides kernel, mesa, u-boot bits when needed
+        ({ config, pkgs, ... }: {
+          nixpkgs.overlays = [ nixos-apple-silicon.overlays.apple-silicon-overlay ];
+        })
         ./hosts/mba-m1/configuration.nix
         ./hosts/mba-m1/hardware-configuration.nix
         {
