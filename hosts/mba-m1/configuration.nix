@@ -10,6 +10,16 @@
   imports = [
     # Hardware + filesystems live in this host's hardware-configuration.nix
     ./hardware-configuration.nix
+    # Reuse generic modules from UM790 where safe
+    ../um790/modules/hyprland.nix
+    ../um790/modules/audio-bluetooth.nix
+    ../um790/modules/containers.nix
+    ../um790/modules/firewall.nix
+    ../um790/modules/power.nix
+    ../um790/modules/firmware.nix
+    ../um790/modules/snapshots.nix
+    # Apple‑silicon graphics settings
+    ./modules/graphics.nix
   ];
 
   # Boot on Apple Silicon via Asahi's UEFI environment
@@ -90,6 +100,10 @@
     nix-ld.enable = true;
     nh.enable = true;
   };
+
+  # 1Password GUI is x86_64-only; avoid on aarch64
+  programs._1password.enable = lib.mkForce false;
+  programs._1password-gui.enable = lib.mkForce false;
 
   # Nix settings and caches
   nix = {

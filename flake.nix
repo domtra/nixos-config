@@ -109,7 +109,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.dom = { imports = homeModules; };
+            users.dom = { imports = homeModules ++ [ ./hosts/mba-m1/home-overrides.nix ]; };
             extraSpecialArgs = { inherit inputs; };
           };
         }
