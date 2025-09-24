@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 
@@ -20,130 +21,133 @@
   home.stateVersion = "24.11";
 
   # Essential CLI packages
-  home.packages = with pkgs; [
-    # Version control and development
-    git
-    stow
+  home.packages =
+    with pkgs;
+    [
+      # Version control and development
+      git
+      stow
 
-    # Text editing
-    #neovim
-    gcc
-    tree-sitter
-    nixfmt
-    nixd
-    statix
-    deadnix
+      # Text editing
+      #neovim
+      gcc
+      tree-sitter
+      nixfmt
+      nixd
+      statix
+      deadnix
 
-    # Search and file management
-    ripgrep
-    fd
-    tree
-    wget
-    curl
-    unzip
+      # Search and file management
+      ripgrep
+      fd
+      tree
+      wget
+      curl
+      unzip
 
-    # System monitoring
-    htop
-    btop
+      # System monitoring
+      htop
+      btop
 
-    # Data processing
-    jq
-    yq
+      # Data processing
+      jq
+      yq
 
-    # Documentation
-    glow
+      # Documentation
+      glow
 
-    # Wayland helpers (configs managed by Stow)
-    wl-clipboard
-    grim
-    slurp
-    swappy
-    swaybg
+      # Wayland helpers (configs managed by Stow)
+      wl-clipboard
+      grim
+      slurp
+      swappy
+      swaybg
 
-    # Terminal emulator (config via Stow)
-    alacritty
+      # Terminal emulator (config via Stow)
+      alacritty
 
-    # Fonts for terminal and desktop
-    #(nerdfonts.override { fonts = [ "JetBrainsMono" "Hasklug" "CaskaydiaMono" ]; })
-    nerd-fonts.hasklug
-    nerd-fonts.caskaydia-mono
+      # Fonts for terminal and desktop
+      #(nerdfonts.override { fonts = [ "JetBrainsMono" "Hasklug" "CaskaydiaMono" ]; })
+      nerd-fonts.hasklug
+      nerd-fonts.caskaydia-mono
 
-    # Optional notification/launcher/bar tools (configs via Stow)
-    mako # Notifications
-    wofi # Launcher
-    waybar # Status bar
-    # swayosd
-    # walker
+      # Optional notification/launcher/bar tools (configs via Stow)
+      mako # Notifications
+      wofi # Launcher
+      waybar # Status bar
+      # swayosd
+      # walker
 
-    # Desktop apps
-    # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
-    # nautilus sushi signal-desktop spotify
-    evince
-    imv
-    mpv
-    libreoffice
-    pinta
-    obsidian
-    localsend
-    nautilus
-    sushi
-    impala
+      # Desktop apps
+      # evince imv mpv libreoffice kdenlive pinta obs-studio obsidian localsend
+      # nautilus sushi signal-desktop spotify
+      evince
+      imv
+      mpv
+      libreoffice
+      pinta
+      obsidian
+      localsend
+      nautilus
+      sushi
+      impala
 
-    # CLI & dev
-    zoxide
-    fzf
-    bat
-    eza
-    tldr
-    dust
-    fastfetch
-    whois
-    xmlstarlet
-    plocate
-    gum
-    imagemagick
-    ffmpegthumbnailer
-    gh
-    lazygit
-    lazydocker
+      # CLI & dev
+      zoxide
+      fzf
+      bat
+      eza
+      tldr
+      dust
+      fastfetch
+      whois
+      xmlstarlet
+      plocate
+      gum
+      imagemagick
+      ffmpegthumbnailer
+      gh
+      lazygit
+      lazydocker
 
-    # Audio utils
-    pamixer
-    playerctl
-    wiremix
+      # Audio utils
+      pamixer
+      playerctl
+      wiremix
 
-    # GNOME Keyring tools
-    seahorse
-    libsecret
+      # GNOME Keyring tools
+      seahorse
+      libsecret
 
-    # Note: 1Password packages now managed at system level via programs._1password*
-    # Browser (chromium with Widevine for Apple Music, firefox via system)
-    (chromium.override { enableWideVine = true; })
+      # Note: 1Password packages now managed at system level via programs._1password*
+      # Browser (chromium with Widevine for Apple Music, firefox via system)
+      (chromium.override { enableWideVine = true; })
 
-    bibata-cursors
+      bibata-cursors
 
-    # GTK themes and icons
-    adwaita-icon-theme
-    yaru-theme
+      # GTK themes and icons
+      adwaita-icon-theme
+      yaru-theme
 
-    nodejs
+      nodejs
 
-    satty
-    terminaltexteffects
+      satty
+      terminaltexteffects
 
-    vial
-    via
+      vial
+      via
 
-    ghostty
+      ghostty
 
-    anytype
-    obsidian
+      anytype
+      obsidian
 
-    home-assistant-cli
+      home-assistant-cli
 
-    killall
-    lmstudio
-  ];
+      killall
+      # Add LM Studio only on x86_64 (not available on aarch64)
+    ]
+    ++ lib.optionals pkgs.stdenv.isx86_64 [ lmstudio ];
 
   # Shell configuration
   programs = {

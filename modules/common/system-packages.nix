@@ -2,13 +2,25 @@
 {
   environment.systemPackages = with pkgs; [
     # Core
-    vim wget curl git htop usbutils imagemagick ghostscript sqlite
+    vim
+    wget
+    curl
+    git
+    htop
+    usbutils
+    imagemagick
+    ghostscript
+    sqlite
 
     # Printing
-    cups cups-browsed cups-filters cups-pdf-to-pdf
+    cups
+    cups-pdf-to-pdf
 
     # Desktop utilities
-    gnome-calculator gnome-calendar gnome-themes-extra gum
+    gnome-calculator
+    gnome-calendar
+    gnome-themes-extra
+    gum
 
     # Qt/Wayland helpers
     libsForQt5.qtstyleplugin-kvantum
@@ -17,11 +29,19 @@
     kdePackages.qtwayland
 
     # Hyprland helpers
-    hypridle hyprlock hyprpicker hyprshot hyprsunset hyprland-qtutils
-    swayosd wl-clip-persist wl-screenrec wf-recorder walker
+    hypridle
+    hyprlock
+    hyprpicker
+    hyprshot
+    hyprsunset
+    hyprland-qtutils
+    swayosd
+    wl-clip-persist
+    wl-screenrec
+    wf-recorder
+    walker
 
     # KDE fuse helper
     kdePackages.kio-fuse
   ];
 }
-
