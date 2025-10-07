@@ -10,7 +10,7 @@
     ./hardware-configuration.nix
     ./modules/firewall.nix
     ./modules/graphics.nix
-    ./modules/hyprland.nix
+    ./modules/niri.nix
     ./modules/power.nix
     ./modules/audio-bluetooth.nix
     ./modules/containers.nix
@@ -60,6 +60,9 @@
       "plymouth.use-simpledrm"
     ];
     # kernelParams = [ "amd_pstate=active" "quiet" "splash" "loglevel=3" "udev.log_priority=3" ];
+    extraModprobeConfig = ''
+      options hid_apple fnmode=2
+    '';
 
     # Enable initrd with systemd so Plymouth renders the LUKS prompt
     initrd.systemd.enable = true;

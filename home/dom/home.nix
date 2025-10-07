@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -245,6 +246,13 @@
     SQLITE_CLIB_PATH = "${pkgs.sqlite.out}/lib/libsqlite3.so";
   };
 
+  # Link Niri config as an out-of-store symlink to the dotfiles repo
+  # This avoids copying the file into the Nix store and keeps edits live.
+  home.file.".config/niri" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/niri";
+    recursive = true;
+  };
+
   home.pointerCursor = {
     # name = "Bibata-Modern-Ice";   # must match the theme's name
     # package = pkgs.bibata-cursors;
@@ -268,6 +276,7 @@
     };
   };
 
+  dconf.enable = true;
   # dconf settings for consistent theming
   dconf.settings = {
     "org/gnome/desktop/interface" = {
