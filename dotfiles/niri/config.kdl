@@ -325,6 +325,7 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"^org\.gnome\.Calculator$"#
     open-floating true
 }
 
@@ -333,6 +334,7 @@ window-rule {
 /-window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    match app-id=r#"^1Password$"#
 
     block-out-from "screen-capture"
 
@@ -375,6 +377,8 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Ctrl+Alt+Q { spawn "hyprlock"; }
+    Ctrl+Alt+S { spawn-sh "systemctl suspend & hyprlock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.

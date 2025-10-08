@@ -10,6 +10,8 @@
     niri
     # For X11 apps under Wayland; Niri integrates with it on-demand
     xwayland-satellite
+    # Screen locker used with Niri (see dotfiles bind)
+    swaylock
   ];
 
   programs.uwsm = {
@@ -65,6 +67,10 @@
     };
   };
 
+  # PAM stack for the screen locker (Hyprland used hyprlock; for Niri we use swaylock)
+  security.pam.services.swaylock = { };
+  security.pam.services.hyprlock = { };
+
   # Session variables for Wayland
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -89,9 +95,9 @@
     settings = {
       default_session = {
         # Use UWSM to launch the compositor via its desktop entry if available
-        # command = "${pkgs.niri}/bin/niri-session";
+        command = "${pkgs.niri}/bin/niri-session";
         # command = "${pkgs.uwsm}/bin/uwsm start -S -- niri-session";
-        command = "${pkgs.uwsm}/bin/uwsm start -- niri-uwsm.desktop";
+        # command = "${pkgs.uwsm}/bin/uwsm start -- niri-uwsm.desktop";
         user = "dom";
       };
       # To use a TUI greeter instead, replace with:
