@@ -93,6 +93,54 @@
     openFirewall = true;
   };
 
+  services.httpd = {
+    enable = true;
+    # Load the modules we need
+    # (proxy / proxy_fcgi for PHP-FPM; setenvif/rewrite for Host capture; vhost_alias for VirtualDocumentRoot; ssl if you want :8443 TLS)
+    extraModules = [
+      "proxy_fcgi"
+    ];
+    user = "dom";
+
+    # One wildcard vhost
+    virtualHosts."localhost" = {
+      # Listen on 8443 with TLS (for dev you can also skip TLS and use :8080)
+      listen = [
+        {
+          ip = "0.0.0.0";
+          port = 80;
+        }
+      ];
+
+      serverAliases = [ "*.localhost" ];
+      # vhost_alias: foo.local.blee.ch -> /srv/devsites/foo/public
+      documentRoot = "/var/www"; # not used directly; we set VirtualDocumentRoot below
+
+      extraConfig = ''
+        UseCanonicalName Off
+        # Map host to filesystem path: %1 = first label (subdomain)
+        VirtualDocumentRoot "/var/www/%1"
+
+        DirectoryIndex index.php index.html
+
+        <Directory "/var/www/*">
+          Options +FollowSymLinks -MultiViews
+          AllowOverride All
+          Require all granted
+        </Directory>
+
+        # Pull subdomain into env SUB (strip optional :port)
+        SetEnvIfNoCase Host "^([A-Za-z0-9-]+)\.localhost(?::\d+)?$" SUB=$1
+
+        # Route only PHP to that site's socket.
+        # Handler form keeps PATH_INFO/front-controller behavior sane.
+        <FilesMatch "\.(php|phtml)$">
+          SetHandler "proxy:unix:/run/phpfpm/%{env:SUB}.sock|fcgi://www/"
+        </FilesMatch>
+      '';
+    };
+  };
+
   # Enable thunderbolt support
   # services.hardware.bolt.enable = true;
 
