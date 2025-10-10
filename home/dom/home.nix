@@ -66,6 +66,7 @@
 
       # Terminal emulator (config via Stow)
       alacritty
+      kitty
 
       # Fonts for terminal and desktop
       #(nerdfonts.override { fonts = [ "JetBrainsMono" "Hasklug" "CaskaydiaMono" ]; })
