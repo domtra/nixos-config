@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Enable libvirt virtualization
@@ -8,10 +13,6 @@
       package = pkgs.qemu_kvm;
       runAsRoot = false;
       swtpm.enable = true; # TPM support for VMs
-      ovmf = {
-        enable = true; # UEFI support
-        packages = [ pkgs.OVMFFull.fd ];
-      };
     };
   };
 
@@ -25,12 +26,12 @@
   environment.systemPackages = with pkgs; [
     virt-manager
     virt-viewer
-    spice 
+    spice
     spice-gtk
     spice-protocol
-    win-virtio      # Windows VirtIO drivers
-    win-spice       # Windows spice tools
-    swtpm           # Software TPM emulator
+    win-virtio # Windows VirtIO drivers
+    win-spice # Windows spice tools
+    swtpm # Software TPM emulator
   ];
 
   # Enable spice-vdagentd for better VM integration
@@ -47,7 +48,7 @@
   #    - Overview → Firmware: UEFI x86_64 (OVMF)
   #    - Add Hardware → TPM (Type: Emulated, Version: 2.0)
   # 3. This enables modern features like Secure Boot and TPM for Windows 11
-  
+
   # Useful virsh commands:
   # virsh list --all                    # List all VMs
   # virsh start <vm-name>               # Start VM
@@ -57,3 +58,4 @@
   # virsh net-list                      # List networks
   # virsh vol-list default              # List storage volumes
 }
+
