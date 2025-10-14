@@ -207,6 +207,10 @@
 
       plugins = [ pkgs.vimPlugins.sqlite-lua ];
     };
+
+    direnv = {
+      enable = true;
+    };
   };
 
   # # Walker configuration (replaces nixpkgs walker with 1.0.0 beta + Elephant)

@@ -43,5 +43,7 @@
 
     # KDE fuse helper
     kdePackages.kio-fuse
+
+    devbox
   ];
 }

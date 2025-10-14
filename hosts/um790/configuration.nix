@@ -135,7 +135,7 @@
         # Route only PHP to that site's socket.
         # Handler form keeps PATH_INFO/front-controller behavior sane.
         <FilesMatch "\.(php|phtml)$">
-          SetHandler "proxy:unix:/run/phpfpm/%{env:SUB}.sock|fcgi://www/"
+          SetHandler "proxy:unix:/run/user/1000/phpfpm_%{env:SUB}.sock|fcgi://www/"
         </FilesMatch>
       '';
     };
