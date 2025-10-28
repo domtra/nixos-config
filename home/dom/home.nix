@@ -141,7 +141,7 @@
 
       ghostty
 
-      anytype
+      #anytype
       obsidian
 
       home-assistant-cli
