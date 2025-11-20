@@ -147,6 +147,8 @@
       home-assistant-cli
 
       killall
+
+      beekeeper-studio
       # Add LM Studio only on x86_64 (not available on aarch64)
     ]
     ++ lib.optionals pkgs.stdenv.isx86_64 [ lmstudio ];

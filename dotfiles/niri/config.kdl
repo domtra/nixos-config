@@ -112,7 +112,8 @@ input {
 }
 
 output "DP-2" {
-  scale 1.48
+  //scale 1.48
+  scale 1.5
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -365,6 +366,7 @@ binds {
 
     Mod+B hotkey-overlay-title="Open Browser" { spawn "chromium"; }
     Mod+A hotkey-overlay-title="Open ChatGPT" { spawn-sh "chromium --app=https://chatgpt.com"; }
+    Mod+Shift+A hotkey-overlay-title="Open Home Assistant" { spawn-sh "chromium --app=http://192.168.5.134:8123/lovelace-minimalist-2/home"; }
     // Mod+N hotkey-overlay-title="Open NeoVim" { spawn-sh "alacritty -e nvim"; }
     Mod+N hotkey-overlay-title="Open NeoVim" { spawn-sh "alacritty -e nvim"; }
 

@@ -85,6 +85,7 @@
     drivers = with pkgs; [
       cups-filters
       cups-browsed
+      hplipWithPlugin
     ];
   };
   services.avahi = {
@@ -264,9 +265,8 @@
   # system (one option)
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
-    noto-fonts-extra
     font-awesome
   ];
 

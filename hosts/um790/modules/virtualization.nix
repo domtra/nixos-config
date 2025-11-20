@@ -29,7 +29,7 @@
     spice
     spice-gtk
     spice-protocol
-    win-virtio # Windows VirtIO drivers
+    virtio-win # Windows VirtIO drivers
     win-spice # Windows spice tools
     swtpm # Software TPM emulator
   ];
@@ -58,4 +58,3 @@
   # virsh net-list                      # List networks
   # virsh vol-list default              # List storage volumes
 }
-
