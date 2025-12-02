@@ -112,34 +112,13 @@
         "type": "github"
       }
     },
-    "paneru": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1764193920,
-        "narHash": "sha256-aUZBCAR19xYgqhPiiDftEiLOSYZZJuiwemyO0Qun1rQ=",
-        "owner": "karinushka",
-        "repo": "paneru",
-        "rev": "ba03f9e4bd7c05582a5b13883a2648f08b305ab9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "karinushka",
-        "repo": "paneru",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "disko": "disko",
         "home-manager": "home-manager",
         "nixos-apple-silicon": "nixos-apple-silicon",
-        "nixpkgs": "nixpkgs",
-        "paneru": "paneru"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

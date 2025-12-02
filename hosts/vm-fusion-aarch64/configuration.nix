@@ -33,6 +33,14 @@
     firewall.enable = false;
   };
 
+  services.resolved = {
+    enable = true;
+    fallbackDns = [
+      "1.1.1.1"
+      "9.9.9.9"
+    ];
+  };
+
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -55,6 +63,7 @@
       "video"
       "input"
       "podman"
+      "uinput"
     ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
@@ -77,7 +86,16 @@
   programs.nh.enable = true;
 
   # Guest integration for VMware (clipboard, resolution, time sync)
-  virtualisation.vmware.guest.enable = true;
+  # virtualisation.vmware.guest.enable = true;
+
+  # systemd.user.services.vmware-user = {
+  #   description = "VMware user agent";
+  #   serviceConfig.ExecStart = "${pkgs.open-vm-tools}/bin/vmware-user-suid-wrapper";
+  #   wantedBy = [ "graphical-session.target" ];
+  # };
+  # # services.vmware-vmblock-fuse.enable = true; # provides /proc/fs/vmblock/dev
+
+  # hardware.uinput.enable = true; # creates /dev/uinput and group
 
   hardware.graphics.enable = true;
 

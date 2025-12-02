@@ -37,6 +37,7 @@
       "moonlight"
       "nikitabobko/tap/aerospace"
       "hammerspoon"
+      "utm"
     ];
     onActivation.cleanup = "uninstall";
   };

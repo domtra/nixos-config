@@ -11,10 +11,10 @@
     xwayland-satellite
     swaylock
   ];
-  home.file.".config/niri" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/nixos-config/dotfiles/niri";
-    recursive = true;
-  };
+  # home.file.".config/niri" = {
+  #   source = config.lib.file.mkOutOfStoreSymlink "/nixos-config/dotfiles/niri";
+  #   recursive = true;
+  # };
 
   programs.uwsm = {
     enable = true;
@@ -88,8 +88,16 @@
     };
   };
 
-  programs.ssh.startAgent = true;
-  services.gnome.gcr-ssh-agent.enable = false;
+  # 1Password (GUI + SSH agent)
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "dom" ];
+  };
+
+  # Disable OpenSSH agent to avoid conflict with 1Password
+  programs.ssh.startAgent = false;
+  # services.gnome.gcr-ssh-agent.enable = false;
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
