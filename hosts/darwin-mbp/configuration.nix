@@ -33,6 +33,10 @@
       "google-chrome@canary"
       "firefox"
       "raycast"
+      "ghostty"
+      "moonlight"
+      "nikitabobko/tap/aerospace"
+      "hammerspoon"
     ];
     onActivation.cleanup = "uninstall";
   };

@@ -11,7 +11,8 @@ in
 {
   # Wayland/GUI helpers and desktop apps for the NixOS VM
   home.packages = lib.optionals isLinux (
-    with pkgs; [
+    with pkgs;
+    [
       wl-clipboard
       grim
       slurp
@@ -19,6 +20,7 @@ in
       swaybg
       alacritty
       kitty
+      ghostty
       nerd-fonts.hasklug
       nerd-fonts.caskaydia-mono
       mako

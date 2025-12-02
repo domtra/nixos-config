@@ -54,9 +54,18 @@
       };
 
       # Single nixpkgs instances with shared config
-      pkgs = import nixpkgs { inherit system; config = nixpkgsConfig; };
-      pkgsAarch64 = import nixpkgs { system = systemAarch64; config = nixpkgsConfig; };
-      pkgsDarwin = import nixpkgs { system = systemDarwin; config = nixpkgsConfig; };
+      pkgs = import nixpkgs {
+        inherit system;
+        config = nixpkgsConfig;
+      };
+      pkgsAarch64 = import nixpkgs {
+        system = systemAarch64;
+        config = nixpkgsConfig;
+      };
+      pkgsDarwin = import nixpkgs {
+        system = systemDarwin;
+        config = nixpkgsConfig;
+      };
 
       # Single home modules definition
       homeModules = [ ./home/dom/home.nix ];
