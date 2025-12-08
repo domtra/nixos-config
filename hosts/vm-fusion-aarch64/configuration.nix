@@ -8,6 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/common/system-packages.nix
     ./modules/niri.nix
   ];
 
@@ -86,7 +87,46 @@
   programs.nh.enable = true;
 
   # Guest integration for VMware (clipboard, resolution, time sync)
-  # virtualisation.vmware.guest.enable = true;
+  virtualisation.vmware.guest.enable = true;
+  virtualisation.vmware.guest.headless = false;
+
+  # # Main tools daemon (clipboard channel, display changes, etc.)
+  # systemd.services.vmtoolsd = {
+  #   description = "VMware Tools Daemon";
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [ "network.target" ];
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.open-vm-tools}/bin/vmtoolsd -b";
+  #     Restart = "on-failure";
+  #   };
+  # };
+
+  # # Optional: vmblock for drag & drop / shared folders
+  # systemd.services.vmware-vmblock-fuse = {
+  #   description = "VMware vmblock FUSE";
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [ "syslog.target" ];
+  #   serviceConfig = {
+  #     ExecStart =
+  #       "${pkgs.open-vm-tools}/sbin/vmware-vmblock-fuse "
+  #       + "-o subtype=vmware-vmblock,default_permissions,allow_other /run/vmblock-fuse";
+  #     Restart = "on-failure";
+  #   };
+  # };
+
+  # systemd.user.services.vmware-user = {
+  #   Unit = {
+  #     Description = "VMware user-level agent";
+  #     After = [ "graphical-session.target" ];
+  #   };
+  #   Service = {
+  #     ExecStart = "${pkgs.open-vm-tools}/bin/vmware-user";
+  #     Restart = "on-failure";
+  #   };
+  #   Install = {
+  #     WantedBy = [ "graphical-session.target" ];
+  #   };
+  # };
 
   # systemd.user.services.vmware-user = {
   #   description = "VMware user agent";
@@ -96,6 +136,21 @@
   # # services.vmware-vmblock-fuse.enable = true; # provides /proc/fs/vmblock/dev
 
   # hardware.uinput.enable = true; # creates /dev/uinput and group
+  #
+  systemd.user.services.vmware-user = {
+    description = "VMware User Agent";
+    # Force it to wait for the graphical session
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+
+    serviceConfig = {
+      # Use the wrapper, but ensure env vars are passed
+      ExecStart = "${pkgs.open-vm-tools}/bin/vmware-user-suid-wrapper";
+      Restart = "always";
+      RestartSec = "3";
+    };
+  };
 
   hardware.graphics.enable = true;
 
@@ -163,6 +218,15 @@
     "d /host 0755 root root -"
     "d /host/Downloads 0755 dom users -"
     "d /host/VMShare 0755 dom users -"
+  ];
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-color-emoji
+    noto-fonts-cjk-sans
+    font-awesome
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.hasklug
   ];
 
   # Power management suitable for VMs

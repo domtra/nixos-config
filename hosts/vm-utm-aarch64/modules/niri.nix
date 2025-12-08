@@ -10,10 +10,7 @@
     niri
     xwayland-satellite
     swaylock
-    xclip
-    wl-clipboard
   ];
-  programs.xwayland.enable = true;
   # home.file.".config/niri" = {
   #   source = config.lib.file.mkOutOfStoreSymlink "/nixos-config/dotfiles/niri";
   #   recursive = true;
@@ -85,8 +82,8 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.niri}/bin/niri-session";
-        user = "dom";
+        command = lib.mkDefault "${pkgs.niri}/bin/niri-session";
+        user = lib.mkDefault "dom";
       };
     };
   };
@@ -110,59 +107,4 @@
     ""
     "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets,pkcs11"
   ];
-
-  systemd.user.services.vmware-clipboard-bridge = {
-    description = "Sync Clipboard between X11 (VMware) and Wayland (Niri)";
-
-    # Wait for the session to be fully ready
-    after = [
-      "graphical-session.target"
-      "vmware-user.service"
-    ];
-    partOf = [ "graphical-session.target" ];
-    wantedBy = [ "graphical-session.target" ];
-
-    # Ensure the script finds the tools
-    path = with pkgs; [
-      xclip
-      wl-clipboard
-      bash
-    ];
-
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = "2";
-      # The script handles both directions
-      ExecStart = pkgs.writeShellScript "clipboard-bridge" ''
-        # 1. Background process: Wayland -> X11
-        # Watch for changes in Niri and send to X11 clipboard
-        ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.xclip}/bin/xclip -selection clipboard &
-        PID_WAYLAND=$!
-
-        # 2. Foreground loop: X11 -> Wayland
-        # Watch for changes in X11 (from VMware) and send to Niri
-        last_val=""
-        while true; do
-            # Read X11 clipboard safely
-            curr_val=$(${pkgs.xclip}/bin/xclip -o -selection clipboard 2>/dev/null || true)
-
-            # If changed and not empty
-            if [ "$curr_val" != "$last_val" ] && [ -n "$curr_val" ]; then
-                # Check if the change actually came from Wayland (to avoid loops)
-                wayland_val=$(${pkgs.wl-clipboard}/bin/wl-paste 2>/dev/null || true)
-
-                if [ "$curr_val" != "$wayland_val" ]; then
-                    echo -n "$curr_val" | ${pkgs.wl-clipboard}/bin/wl-copy
-                fi
-                last_val="$curr_val"
-            fi
-            sleep 0.5
-        done
-
-        # Cleanup if the script is killed
-        kill $PID_WAYLAND
-      '';
-    };
-  };
 }

@@ -38,6 +38,10 @@
       "nikitabobko/tap/aerospace"
       "hammerspoon"
       "utm"
+      # "logi-options+"
+      "mac-mouse-fix"
+      "lm-studio"
+      "macwhisper"
     ];
     onActivation.cleanup = "uninstall";
   };

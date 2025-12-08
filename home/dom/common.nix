@@ -61,13 +61,6 @@ in
     ];
 
   programs = {
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        set -gx EDITOR nvim
-      '';
-    };
-
     starship = {
       enable = true;
       settings = {
@@ -118,4 +111,5 @@ in
     EDITOR = "nvim";
     BROWSER = if isDarwin then "google-chrome" else "firefox";
   };
+
 }

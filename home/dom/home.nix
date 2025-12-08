@@ -155,15 +155,6 @@
 
   # Shell configuration
   programs = {
-    # Enable fish shell (replacing previous zsh default)
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        # Extra fish init (keep minimal; main config can live in dotfiles if desired)
-        set -gx EDITOR nvim
-      '';
-    };
-
     # Starship prompt
     starship = {
       enable = true;

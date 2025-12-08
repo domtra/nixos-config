@@ -123,6 +123,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "hm-bak";
               # Import the SAME modules with inputs
               users.dom = {
                 imports = homeModules;
@@ -163,6 +164,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "hm-bak";
               users.dom = {
                 imports = homeModules ++ [ ./hosts/mba-m1/home-overrides.nix ];
               };
@@ -188,6 +190,33 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "hm-bak";
+              users.dom = {
+                imports = homeModulesVm;
+              };
+              extraSpecialArgs = { inherit inputs; };
+            };
+          }
+        ];
+      };
+
+      # UTM Dev VM (Apple Virtualization on Apple Silicon host, aarch64 guest)
+      nixosConfigurations."vm-utm" = nixpkgs.lib.nixosSystem {
+        system = systemAarch64;
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./hosts/vm-utm-aarch64/configuration.nix
+          ./hosts/vm-utm-aarch64/hardware-configuration.nix
+          {
+            nix.settings.experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
+            nixpkgs.pkgs = pkgsAarch64;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "hm-bak";
               users.dom = {
                 imports = homeModulesVm;
               };
@@ -208,6 +237,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "hm-bak";
               users.dom = {
                 imports = homeModulesHost;
               };
@@ -228,6 +258,9 @@
       # Home Manager builds for new profiles
       homeManagerConfigurations."dom@vm-fusion" = homeConfigurationVm;
       "dom@vm-fusion" = homeConfigurationVm.activationPackage;
+
+      homeManagerConfigurations."dom@vm-utm" = homeConfigurationVm;
+      "dom@vm-utm" = homeConfigurationVm.activationPackage;
 
       homeManagerConfigurations."dom@macbook-pro-m4" = homeConfigurationHost;
       "dom@macbook-pro-m4" = homeConfigurationHost.activationPackage;
